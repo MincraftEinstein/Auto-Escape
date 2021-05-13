@@ -1,70 +1,194 @@
 fileFormatVersion: 2
-guid: 4cf565ee9d9e9384bba7bbeed41be0a6
+guid: 1ffbbe177672b194aae47059f03c1c3e
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Base
-    100004: Bumper_Back
-    100006: Bumper_Front
-    100008: Door_Step
-    100010: Glass
-    100012: Lights_Back
-    100014: Lights_Front
-    100016: SideMirror
-    100018: Wheel_Back_Left
-    100020: Wheel_Back_Right
-    100022: Wheel_Front_Left
-    100024: Wheel_Front_Right
-    400000: //RootNode
-    400002: Base
-    400004: Bumper_Back
-    400006: Bumper_Front
-    400008: Door_Step
-    400010: Glass
-    400012: Lights_Back
-    400014: Lights_Front
-    400016: SideMirror
-    400018: Wheel_Back_Left
-    400020: Wheel_Back_Right
-    400022: Wheel_Front_Left
-    400024: Wheel_Front_Right
-    2300000: Base
-    2300002: Bumper_Back
-    2300004: Bumper_Front
-    2300006: Door_Step
-    2300008: Glass
-    2300010: Lights_Back
-    2300012: Lights_Front
-    2300014: SideMirror
-    2300016: Wheel_Back_Left
-    2300018: Wheel_Back_Right
-    2300020: Wheel_Front_Left
-    2300022: Wheel_Front_Right
-    3300000: Base
-    3300002: Bumper_Back
-    3300004: Bumper_Front
-    3300006: Door_Step
-    3300008: Glass
-    3300010: Lights_Back
-    3300012: Lights_Front
-    3300014: SideMirror
-    3300016: Wheel_Back_Left
-    3300018: Wheel_Back_Right
-    3300020: Wheel_Front_Left
-    3300022: Wheel_Front_Right
-    4300000: Base
-    4300002: Wheel_Front_Left
-    4300004: Bumper_Front
-    4300006: Bumper_Back
-    4300008: Door_Step
-    4300010: Lights_Front
-    4300012: Lights_Back
-    4300014: SideMirror
-    4300016: Glass
-    4300018: Wheel_Back_Left
-    4300020: Wheel_Front_Right
-    4300022: Wheel_Back_Right
+  serializedVersion: 26
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Base
+  - first:
+      1: 100004
+    second: Bumper_Back
+  - first:
+      1: 100006
+    second: Bumper_Front
+  - first:
+      1: 100008
+    second: Door_Step
+  - first:
+      1: 100010
+    second: Glass
+  - first:
+      1: 100012
+    second: Lights_Back
+  - first:
+      1: 100014
+    second: Lights_Front
+  - first:
+      1: 100016
+    second: SideMirror
+  - first:
+      1: 100018
+    second: Wheel_Back_Left
+  - first:
+      1: 100020
+    second: Wheel_Back_Right
+  - first:
+      1: 100022
+    second: Wheel_Front_Left
+  - first:
+      1: 100024
+    second: Wheel_Front_Right
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Base
+  - first:
+      4: 400004
+    second: Bumper_Back
+  - first:
+      4: 400006
+    second: Bumper_Front
+  - first:
+      4: 400008
+    second: Door_Step
+  - first:
+      4: 400010
+    second: Glass
+  - first:
+      4: 400012
+    second: Lights_Back
+  - first:
+      4: 400014
+    second: Lights_Front
+  - first:
+      4: 400016
+    second: SideMirror
+  - first:
+      4: 400018
+    second: Wheel_Back_Left
+  - first:
+      4: 400020
+    second: Wheel_Back_Right
+  - first:
+      4: 400022
+    second: Wheel_Front_Left
+  - first:
+      4: 400024
+    second: Wheel_Front_Right
+  - first:
+      23: 2300000
+    second: Base
+  - first:
+      23: 2300002
+    second: Bumper_Back
+  - first:
+      23: 2300004
+    second: Bumper_Front
+  - first:
+      23: 2300006
+    second: Door_Step
+  - first:
+      23: 2300008
+    second: Glass
+  - first:
+      23: 2300010
+    second: Lights_Back
+  - first:
+      23: 2300012
+    second: Lights_Front
+  - first:
+      23: 2300014
+    second: SideMirror
+  - first:
+      23: 2300016
+    second: Wheel_Back_Left
+  - first:
+      23: 2300018
+    second: Wheel_Back_Right
+  - first:
+      23: 2300020
+    second: Wheel_Front_Left
+  - first:
+      23: 2300022
+    second: Wheel_Front_Right
+  - first:
+      33: 3300000
+    second: Base
+  - first:
+      33: 3300002
+    second: Bumper_Back
+  - first:
+      33: 3300004
+    second: Bumper_Front
+  - first:
+      33: 3300006
+    second: Door_Step
+  - first:
+      33: 3300008
+    second: Glass
+  - first:
+      33: 3300010
+    second: Lights_Back
+  - first:
+      33: 3300012
+    second: Lights_Front
+  - first:
+      33: 3300014
+    second: SideMirror
+  - first:
+      33: 3300016
+    second: Wheel_Back_Left
+  - first:
+      33: 3300018
+    second: Wheel_Back_Right
+  - first:
+      33: 3300020
+    second: Wheel_Front_Left
+  - first:
+      33: 3300022
+    second: Wheel_Front_Right
+  - first:
+      43: 4300000
+    second: Base
+  - first:
+      43: 4300002
+    second: Wheel_Front_Left
+  - first:
+      43: 4300004
+    second: Bumper_Front
+  - first:
+      43: 4300006
+    second: Bumper_Back
+  - first:
+      43: 4300008
+    second: Door_Step
+  - first:
+      43: 4300010
+    second: Lights_Front
+  - first:
+      43: 4300012
+    second: Lights_Back
+  - first:
+      43: 4300014
+    second: SideMirror
+  - first:
+      43: 4300016
+    second: Glass
+  - first:
+      43: 4300018
+    second: Wheel_Back_Left
+  - first:
+      43: 4300020
+    second: Wheel_Front_Right
+  - first:
+      43: 4300022
+    second: Wheel_Back_Right
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -100,6 +224,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -107,18 +232,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -127,10 +253,11 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -140,6 +267,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
