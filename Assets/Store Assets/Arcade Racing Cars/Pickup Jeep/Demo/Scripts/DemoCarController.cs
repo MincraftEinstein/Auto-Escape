@@ -19,6 +19,7 @@ namespace Lowscope.ARC
         private float currentAccelerationTime = 0;
         private float currentVelocity;
         private float currentHorizontal;
+        private float RigidBody;
 
         private Quaternion frontWheelRotation;
 
@@ -31,6 +32,7 @@ namespace Lowscope.ARC
 
         private void Start()
         {
+            
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -100,11 +102,11 @@ namespace Lowscope.ARC
         {
             currentVelocity = (currentAccelerationTime * maxSpeed) * Time.deltaTime;
 
-            rigidBody.MovePosition(rigidBody.transform.position + (transform.forward * currentVelocity));
+            RigidBody.MovePosition(RigidBody.transform.position + (transform.forward * currentVelocity));
 
             if (currentVelocity != 0)
             {
-                rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, ((totalRotation * 30) * currentAccelerationTime) * Time.deltaTime, 0), Time.deltaTime));
+                RigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, ((totalRotation * 30) * currentAccelerationTime) * Time.deltaTime, 0), Time.deltaTime));
             }
         }
     }
