@@ -1,19 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CarController : MonoBehaviour
 {
     public Transform path;
     public float maxSteerAngle = 45.0F;
-    public float turnSpeed = 5F;
+    public float turnSpeed = 5.0F;
 
     public float maxMotorTorque = 80.0F;
-    public float maxBrakeTorque = 150;
-    private float currentSpeed;
-    public float maxSpeed = 100;
+    public float minMotorTorque = 50.0F;
+    public float maxBrakeTorque = 150.0F;
+    public float currentSpeed;
+    public float maxSpeed = 100.0F;
+    public float minSpeed = 50.0F;
     public Vector3 centerOfMass;
     public bool isBreaking;
+    public bool slowDown;
+
+    [Header("Track")]
+    public int trackLaps;
+    private int currentLap;
+    public GameObject finishLine;
 
     [Header("Wheels")]
     public WheelCollider wheelFL;
@@ -27,10 +36,10 @@ public class CarController : MonoBehaviour
     public Renderer carRenderer;
 
     [Header("Sensors")]
-    public float sensorLength = 3;
+    public float sensorLength = 3.0F;
     public Vector3 frontSensorPos = new Vector3(0, 0.2F, 0.93F);
     public float frontSideSensorPos = 0.1F;
-    public float frontSensorAngle = 30;
+    public float frontSensorAngle = 30.0F;
 
     private List<Transform> nodes;
     private int currentNode = 0;
@@ -55,6 +64,14 @@ public class CarController : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+        if (trackLaps <= currentLap)
+        {
+            isBreaking = true;
+        }
+    }
+
     private void FixedUpdate()
     {
         Sensors();
@@ -78,7 +95,7 @@ public class CarController : MonoBehaviour
         sensorStartPos += transform.right * frontSideSensorPos;
         if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
         {
-            if (!hit.collider.CompareTag("Road"))
+            if (!hit.collider.CompareTag("Road") || !hit.collider.CompareTag("Point"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
                 avoiding = true;
@@ -89,7 +106,7 @@ public class CarController : MonoBehaviour
         // Front right angle sensor
         else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
         {
-            if (!hit.collider.CompareTag("Road"))
+            if (!hit.collider.CompareTag("Road") || !hit.collider.CompareTag("Point"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
                 avoiding = true;
@@ -101,7 +118,7 @@ public class CarController : MonoBehaviour
         sensorStartPos -= transform.right * frontSideSensorPos * 2;
         if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
         {
-            if (!hit.collider.CompareTag("Road"))
+            if (!hit.collider.CompareTag("Road") || !hit.collider.CompareTag("Point"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
                 avoiding = true;
@@ -112,7 +129,7 @@ public class CarController : MonoBehaviour
         // Front left angle sensor
         else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
         {
-            if (!hit.collider.CompareTag("Road"))
+            if (!hit.collider.CompareTag("Road") || !hit.collider.CompareTag("Point"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
                 avoiding = true;
@@ -125,7 +142,7 @@ public class CarController : MonoBehaviour
         {
             if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
             {
-                if (!hit.collider.CompareTag("Road"))
+                if (!hit.collider.CompareTag("Road") || !hit.collider.CompareTag("Point"))
                 {
                     Debug.DrawLine(sensorStartPos, hit.point);
                     avoiding = true;
@@ -138,7 +155,7 @@ public class CarController : MonoBehaviour
                         avoidMultiplier = 1;
                     }
                 }
-            } 
+            }
         }
 
         if (avoiding)
@@ -159,21 +176,62 @@ public class CarController : MonoBehaviour
     private void Drive()
     {
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
-        if (currentSpeed < maxSpeed && !isBreaking)
+        //if (currentSpeed < maxSpeed && !isBreaking)
+        //{
+        //    wheelFL.motorTorque = maxMotorTorque;
+        //    wheelFR.motorTorque = maxMotorTorque;
+        //}
+        //else
+        //{
+        //    wheelFL.motorTorque = 0;
+        //    wheelFR.motorTorque = 0;
+        //}
+        if (nodes[currentNode].position.y < transform.position.y || slowDown) // Slows the car down if it is on a hill
         {
-            wheelFL.motorTorque = maxMotorTorque;
-            wheelFR.motorTorque = maxMotorTorque;
+            if (currentSpeed > minSpeed && !isBreaking && currentSpeed <= 15)
+            {
+                wheelFL.motorTorque = minMotorTorque;
+                wheelFR.motorTorque = minMotorTorque;
+            }
+            else
+            {
+                wheelFL.motorTorque = 0;
+                wheelFR.motorTorque = 0;
+            }
         }
+        //{
+        //    isBreaking = true;
+        //}
         else
         {
-            wheelFL.motorTorque = 0;
-            wheelFR.motorTorque = 0;
+            if (currentSpeed < maxSpeed && !isBreaking)
+            {
+                wheelFL.motorTorque = maxMotorTorque;
+                wheelFR.motorTorque = maxMotorTorque;
+            }
+            else
+            {
+                wheelFL.motorTorque = 0;
+                wheelFR.motorTorque = 0;
+            }
+        }
+
+        if (currentNode != 0 && currentNode != nodes.Count -1)
+        {
+            if (Vector3.Distance(nodes[currentNode - 1].position, nodes[currentNode].position) < 5.0F)
+            {
+                slowDown = true;
+            }
+            else
+            {
+                slowDown = false;
+            }
         }
     }
 
     private void CheckWayPoint()
     {
-        if (Vector3.Distance(transform.position, nodes[currentNode].position) < 0.5F)
+        if (Vector3.Distance(transform.position, nodes[currentNode].position) < 5.0F)
         {
             if (currentNode == nodes.Count - 1)
             {
@@ -184,6 +242,8 @@ public class CarController : MonoBehaviour
                 currentNode++;
             }
         }
+        Debug.Log(nodes[currentNode].gameObject.name);
+        //Debug.Log(nodes.Count);
     }
 
     private void Braking()
@@ -206,5 +266,24 @@ public class CarController : MonoBehaviour
     {
         wheelFL.steerAngle = Mathf.Lerp(wheelFL.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
         wheelFR.steerAngle = Mathf.Lerp(wheelFR.steerAngle, targetSteerAngle, Time.deltaTime * turnSpeed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == finishLine)
+        {
+            currentLap++;
+            Debug.Log("Reached finishline");
+        }
+        if (other.gameObject.name.Contains("SlowPoint"))
+        {
+            isBreaking = true;
+            Debug.Log("Hit slow point");
+        }
+        if (other.gameObject.name.Contains("SpeedPoint"))
+        {
+            isBreaking = false;
+            Debug.Log("Hit speed point");
+        }
     }
 }
