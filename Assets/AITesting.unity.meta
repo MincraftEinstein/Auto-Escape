@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/AITesting.unity.meta
+guid: f2bea05f23d0c214ab77651d6afba0df
+||||||| 9aff25d:Assets/Physics Materials.meta
+guid: 51db51285731d9f46aa23ac840c2cc2f
+folderAsset: yes
+=======
+guid: fd73c477f672b3445a25a6851466aeb2
+folderAsset: yes
+>>>>>>> main:Assets/Asset.meta
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

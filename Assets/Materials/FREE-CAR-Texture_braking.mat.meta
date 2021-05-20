@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Materials/FREE-CAR-Texture_braking.mat.meta
+guid: b93345ab202d70c449f140fb40a43c36
+NativeFormatImporter:
+||||||| 9aff25d:Assets/Prefabs/Placeholder terrain.meta
+guid: 3b13eca3788f3bc4d958b4cff7597783
+folderAsset: yes
+DefaultImporter:
+=======
+guid: 6e780f31828abb84ea2014c42bb74734
+folderAsset: yes
+DefaultImporter:
+>>>>>>> main:Assets/Cars.meta
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
