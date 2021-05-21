@@ -242,7 +242,7 @@ public class CarController : MonoBehaviour
                 currentNode++;
             }
         }
-        Debug.Log(nodes[currentNode].gameObject.name);
+        //Debug.Log(nodes[currentNode].gameObject.name);
         //Debug.Log(nodes.Count);
     }
 
