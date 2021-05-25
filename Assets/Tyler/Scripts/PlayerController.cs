@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
 public enum CameraMode
 {
     Default,
@@ -19,21 +20,24 @@ public enum CameraMode
 
 public class PlayerController : MonoBehaviour
 {
+    public bool canDrive = true;
+
     //Camera
-    private GameObject cam;
+    public GameObject cam;
     private float cameraTilt = 12.0f;
-    private float tiltSpeed = .1f;
+    private float tiltSpeed = 0.1f;
 
     //uiCanvas
     private GameObject uiCanvas;
 
     //Vehicle
-    private GameObject vehicleChassis;
+    public GameObject vehicleChassis;
     private GameObject wheelModels_GameObject;
     private GameObject wheelColliders_GameObject;
 
-    private float vehicleSpeed = 5.0f;
-    private float curVehicleSpeed = 0.0f;
+    public float vehicleSpeed = 5.0f;
+    [ReadOnly]
+    public float curVehicleSpeed = 0.0f;
 
     private float steering = 0;
     private float maxSteering = 30.0f;
@@ -45,8 +49,8 @@ public class PlayerController : MonoBehaviour
     public List<WheelCollider> frontWheels = new List<WheelCollider>();
 
     //Center of mass and Rigidbody
-    public Rigidbody vehicleRb;
-    public Transform centerOfMass;
+    private Rigidbody vehicleRb;
+    public Vector3 centerOfMass;
 
     //Headlights
     private GameObject[] headlights;
@@ -79,22 +83,24 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GameObject.Find("FocalPoint");
+        //cam = GameObject.Find("FocalPoint");
 
         uiCanvas = GameObject.Find("Canvas");
 
-        vehicleChassis = transform.Find("Chassis").gameObject;
+        //vehicleChassis = transform.Find("Chassis").gameObject;
 
         wheelModels_GameObject = transform.Find("Wheel_Models").gameObject;
         wheelColliders_GameObject = transform.Find("Wheel_Colliders").gameObject;
+        Debug.Log(transform.Find("Wheel_Models").gameObject.name);
+        Debug.Log(transform.Find("Wheel_Colliders").gameObject.name);
 
         //Rigidbody
         vehicleRb = transform.gameObject.AddComponent<Rigidbody>();
-        vehicleRb.mass = 1000;
-        vehicleRb.drag = .05f;
-        vehicleRb.angularDrag = .05f;
+        vehicleRb.mass = 1200;
+        vehicleRb.drag = 0; // 0.05f;
+        vehicleRb.angularDrag = 0.03f;
 
-        vehicleRb.centerOfMass = centerOfMass.position;
+        vehicleRb.centerOfMass = centerOfMass;
 
         //WheelColliders
         wheelColliders = new WheelCollider[wheelColliders_GameObject.transform.childCount];
@@ -104,14 +110,14 @@ public class PlayerController : MonoBehaviour
             GameObject wheel = wheelColliders_GameObject.transform.GetChild(i).gameObject;
             WheelCollider wheelCollider = wheel.AddComponent<WheelCollider>();
             wheelCollider.mass = 1;
-            wheelCollider.radius = .25f;
-            wheelCollider.wheelDampingRate = .5f;
-            wheelCollider.suspensionDistance = .1f;
+            wheelCollider.radius = 0.25f;
+            wheelCollider.wheelDampingRate = 0.5f;
+            wheelCollider.suspensionDistance = 0.1f;
 
             var ss = wheelCollider.suspensionSpring;
             ss.spring = 4000;
             ss.damper = 2000;
-            ss.targetPosition = .5f;
+            ss.targetPosition = 0.5f;
 
             var fwdFriction = wheelCollider.forwardFriction;
             fwdFriction.extremumSlip = 1;
@@ -255,7 +261,10 @@ public class PlayerController : MonoBehaviour
 
         //Update functions
         UpdateWheels();
-        VehicleMovement(verticalInput, horizontalInput);
+        if (canDrive)
+        {
+            VehicleMovement(verticalInput, horizontalInput);
+        }
 
         float currentCameraTilt = verticalInput * (horizontalInput * cameraTilt);
 
@@ -352,6 +361,6 @@ public class PlayerController : MonoBehaviour
         + "\n" + "wheelRot = " + Round(steering).ToString()
         + "\n" + "cameraMode = " + currentCameraMode;
 
-        uiCanvas.transform.Find("Debug").transform.gameObject.GetComponent<TextMeshProUGUI>().text = debugTxt;
+        //uiCanvas.transform.Find("Debug").transform.gameObject.GetComponent<TextMeshProUGUI>().text = debugTxt;
     }
 }

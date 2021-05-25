@@ -12,17 +12,15 @@ public class CarController : MonoBehaviour
     public float maxMotorTorque = 80.0F;
     public float minMotorTorque = 50.0F;
     public float maxBrakeTorque = 150.0F;
+    [ReadOnly]
     public float currentSpeed;
     public float maxSpeed = 100.0F;
     public float minSpeed = 50.0F;
     public Vector3 centerOfMass;
+    [ReadOnly]
     public bool isBreaking;
+    [ReadOnly]
     public bool slowDown;
-
-    [Header("Track")]
-    public int trackLaps;
-    private int currentLap;
-    public GameObject finishLine;
 
     [Header("Wheels")]
     public WheelCollider wheelFL;
@@ -60,15 +58,6 @@ public class CarController : MonoBehaviour
             {
                 nodes.Add(pathTransforms[i]);
             }
-        }
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (trackLaps <= currentLap)
-        {
-            isBreaking = true;
         }
     }
 
@@ -176,6 +165,8 @@ public class CarController : MonoBehaviour
     private void Drive()
     {
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
+        //float speedTo = maxMotorTorque;
+        //float currentVelocity = speedTo * 1.5F;
         //if (currentSpeed < maxSpeed && !isBreaking)
         //{
         //    wheelFL.motorTorque = maxMotorTorque;
@@ -192,11 +183,19 @@ public class CarController : MonoBehaviour
             {
                 wheelFL.motorTorque = minMotorTorque;
                 wheelFR.motorTorque = minMotorTorque;
+                wheelBL.motorTorque = maxMotorTorque;
+                wheelBR.motorTorque = maxMotorTorque;
+                //wheelFL.motorTorque = 8000f * Time.deltaTime * currentVelocity;
+                //wheelFR.motorTorque = 8000f * Time.deltaTime * currentVelocity;
+                //wheelBL.motorTorque = 8000f * Time.deltaTime * currentVelocity;
+                //wheelBR.motorTorque = 8000f * Time.deltaTime * currentVelocity;
             }
             else
             {
                 wheelFL.motorTorque = 0;
                 wheelFR.motorTorque = 0;
+                wheelBL.motorTorque = 0;
+                wheelBR.motorTorque = 0;
             }
         }
         //{
@@ -208,11 +207,19 @@ public class CarController : MonoBehaviour
             {
                 wheelFL.motorTorque = maxMotorTorque;
                 wheelFR.motorTorque = maxMotorTorque;
+                wheelBL.motorTorque = maxMotorTorque;
+                wheelBR.motorTorque = maxMotorTorque;
+                //wheelFL.motorTorque = 8000f * Time.deltaTime * currentVelocity;
+                //wheelFR.motorTorque = 8000f * Time.deltaTime * currentVelocity;
+                //wheelBL.motorTorque = 8000f * Time.deltaTime * currentVelocity;
+                //wheelBR.motorTorque = 8000f * Time.deltaTime * currentVelocity;
             }
             else
             {
                 wheelFL.motorTorque = 0;
                 wheelFR.motorTorque = 0;
+                wheelBL.motorTorque = 0;
+                wheelBR.motorTorque = 0;
             }
         }
 
@@ -270,11 +277,6 @@ public class CarController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == finishLine)
-        {
-            currentLap++;
-            Debug.Log("Reached finishline");
-        }
         if (other.gameObject.name.Contains("SlowPoint"))
         {
             isBreaking = true;

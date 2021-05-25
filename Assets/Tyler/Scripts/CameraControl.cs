@@ -29,7 +29,7 @@ public class CameraControl : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, yaw, 0);
 
-        player = GameObject.Find("TestVehicle");
+        player = GameObject.Find("Player");
 
         playerController = player.GetComponent<PlayerController>();
 
