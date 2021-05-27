@@ -21,6 +21,7 @@ public enum CameraMode
 public class PlayerController : MonoBehaviour
 {
     public bool canDrive = true;
+    public TextMeshProUGUI speedText;
 
     //Camera
     public GameObject cam;
@@ -250,6 +251,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+        speedText.text = "MPH: " + (Mathf.Round(curVehicleSpeed) * 15);
     }
 
     // Update is called once per frame
